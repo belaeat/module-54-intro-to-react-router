@@ -12,6 +12,8 @@ import Home from './Home/Home';
 import First from './components/First/First';
 import Friends from './components/Friends/Friends';
 import FriendDetail from './components/FriendDetail/FriendDetail';
+import Posts from './components/Posts/Posts';
+import PostDetail from './components/PostDetail/PostDetail';
 
 /* const router = createBrowserRouter([
   {
@@ -48,8 +50,22 @@ const router = createBrowserRouter([
 
       {
         /* ':' diye dynamic vabe route set kore*/
+
         path: 'friend/:friendID',
-        element: <FriendDetail></FriendDetail>
+        element: <FriendDetail></FriendDetail>,
+        loader: ({params}) => fetch(`https://jsonplaceholder.typicode.com/users/${params.friendID}`)
+      },
+
+      {
+        path: 'posts',
+        element: <Posts></Posts>,
+        loader: () => fetch('https://jsonplaceholder.typicode.com/posts')
+      },
+
+      {
+        path: 'post/:postID',
+        element: <PostDetail></PostDetail>,
+        loader: ({params}) => fetch(`https://jsonplaceholder.typicode.com/posts/${params.postID}`)
       },
 
       {
@@ -60,6 +76,12 @@ const router = createBrowserRouter([
       {
         path: 'contact',
         element: <Contact></Contact>
+      },
+
+      // 404 not found
+      {
+        path: '*',
+        element: <div>404 Not Found</div>
       }
     ]
   }
